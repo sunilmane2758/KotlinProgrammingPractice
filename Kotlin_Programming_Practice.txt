@@ -1,0 +1,203 @@
+1. Extension Function:
+
+   fun extensionFunction(){
+    println("Hello Sunil".formattedString())
+    }
+
+   fun String.formattedString() : String{
+    return "--------$this--------"
+    }
+
+   fun main(args:Array<String>){
+    extensionFunction()
+   }
+
+
+o/p ::::    -- --------Hello Sunil--------
+
+//------------------------------------------------------------------------------------------------------------------------------//
+
+
+2. Higher Order Function :
+
+
+   // normal function
+   fun normalFunction(a:Int,b:Int):Int{
+    return a+b
+    }
+
+    // function as parmater
+
+    fun sumof(add:(Int,Int)->Int){
+        var resultIs = add(12,23)
+        println(resultIs)
+    }
+
+    // return function
+
+    fun minus():(Int,Int) -> Int{
+    return ::normalFunction
+}
+
+fun main(args:Array<String>){
+
+    sumof(::normalFunction)
+
+    var objOfMinus = minus()
+    var resultIs = objOfMinus(90,10)
+
+    println(resultIs)
+
+
+
+o/p ::::  35
+          100
+}
+
+
+//------------------------------------------------------------------------------------------------------------------------------//
+
+
+3. Sealed and Enum Class :
+
+   sealed class NetworkResult(){
+    class Success(message:String,exception: Exception):NetworkResult()
+    class Loading(string:String):NetworkResult()
+    class Error(message: String,exception: RuntimeException):NetworkResult()
+    }
+    enum class NetworkResult1(message: String){
+    success("Success"),loading("Loading")
+    }
+
+//------------------------------------------------------------------------------------------------------------------------------//
+
+4. Inline Function :
+    fun car() {
+    println("Car is Started")
+    bike()
+    println("Car is Stopped")
+    }
+
+    inline fun bike() {
+    println("bike is started")
+    }
+
+    fun main(args:Array<String>){
+    car()
+    }
+
+//------------------------------------------------------------------------------------------------------------------------------//
+
+5. Elvis Operartor :
+
+fun main(args:Array<String>){
+
+    var name:String?= "Sunil"   or //null
+    var name1= name?.length ?: -1
+
+
+    // if name is null it will print -1 otherwise it will return desired value
+
+    println(name1)
+
+
+    var message:String? = "Goood Morning"
+
+    message = null
+    println(message)
+    var result:String? = "MindOrks"
+    println(result?.length)
+    result = null
+    result!!
+}
+
+//------------------------------------------------------------------------------------------------------------------------------//
+6. Scope Function
+
+
+package practice
+
+class Person() {
+    var name: String? = "Sandeep"
+    var age: Int? = 23
+}
+
+fun main(args: Array<String>) {
+
+    var person = Person()
+1.    // using let function
+
+    person.let {
+        it.name
+        it.age
+        println(it.name)
+        println(it.age)
+    }
+    var a: Int? = null
+    // using let function
+    a?.let {
+        // statement(s) will
+        // not execute as a is null
+        print(it)
+    }
+
+
+2.    // using run
+
+    person.run {
+        this.name
+        this.age
+        println("Run Blocking Scope " + this.name)
+        println("Run Blocking Scope " + this.age)
+    }
+
+
+
+3.    // using withcontext
+
+    with(person) {
+
+        this.name
+        this.age
+
+        println("with scope " + this.name)
+        println("with scope " + this.age)
+
+    }
+
+
+
+4.    // using apply
+
+    person.apply {
+
+        this.name
+        this.age
+
+        println("apply scope " + this.name)
+        println("apply scope " + this.age)
+    }
+
+
+
+5.    // using also
+
+    person.also {
+
+        it.name
+        it.age
+
+        println(it.name)
+
+    }
+
+    val list = mutableListOf<Int>(1, 2, 3, 9, 6, 22, 88)
+
+    list.also {
+        it.add(4)
+        it.remove(2)
+        // more operations if needed
+    }
+    println(list)
+
+}
